@@ -1,0 +1,33 @@
+<div class="container">
+  <h1>Auth Firebase Example</h1>
+  <div id="action-links"></div>
+</div>
+
+<script type="module">
+  import { auth } from "./firebase.js";
+  import { signOut } from "https://www.gstatic.com/firebasejs/9.9.1/firebase-auth.js";
+  import {
+    addDoc,
+    query,
+    orderBy,
+    collection,
+    onSnapshot,
+  } from "https://www.gstatic.com/firebasejs/9.9.1/firebase-firestore.js";
+
+  window.handleSignOut = () => {
+    signOut(auth);
+  };
+
+  if (auth.currentUser) {
+    document.querySelector("#action-links").innerHTML = /*html*/ `
+      <img class="navbar-avatar" src="${auth.currentUser.photoURL}" alt="" />
+      <span>${auth.currentUser.displayName}</span>
+      <button onclick="handleSignOut()" class="btn btn-danger">Logout</button>
+    `;
+  } else {
+    document.querySelector("#action-links").innerHTML = /*html*/ `
+      <a href="#/login" class="btn btn-success">Login</a>
+      <a href="#/register" class="btn btn-primary">Register</a>
+    `;
+  }
+</script>
